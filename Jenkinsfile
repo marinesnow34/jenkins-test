@@ -1,12 +1,25 @@
 pipeline {
     agent any
+
     stages {
-        stage('github-clone') {
+        stage('Checkout') {
             steps {
-                git branch: 'main', credentialsId: 'jenkins', url: '{REPOSITORY URL}'
+                echo 'Checking out the repository...'
+                checkout scm
             }
         }
-        
-   		// stage...
-   	}
+        stage('Build') {
+            steps {
+                echo 'Building the application...'
+                sh 'chmod +x gradlew'
+                sh './gradlew clean build -x test'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                sh './gradlew test'
+            }
+        }
+    }
 }
