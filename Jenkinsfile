@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('github-clone') {
             steps {
-                git branch: 'BE', credentialsId: 'github_token', url: '{REPOSITORY URL}'
+                git branch: 'main', credentialsId: 'jenkins', url: '{REPOSITORY URL}'
             }
         }
         
