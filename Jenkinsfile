@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        GHCR_URL = 'ghcr.io'
+        IMAGE_NAME = 'ghcr.io/marinesnow34/jenkins-test'
+    }
+    
     stages {
         stage('Checkout') {
             steps {
@@ -19,6 +24,13 @@ pipeline {
             steps {
                 echo 'Running tests...'
                 sh './gradlew test'
+            }
+        }
+        stage('Login to GHCR') {
+            steps {
+                script {
+                    docker.withRegistry("https://${env.GHCR_URL}", 'ghcr-token') { }
+                }
             }
         }
     }
