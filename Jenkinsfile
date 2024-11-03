@@ -4,17 +4,16 @@ pipeline {
     environment {
         GHCR_URL = 'ghcr.io'
         IMAGE_NAME = 'ghcr.io/marinesnow34/jenkins-test'
+        SSH_USER = credentials('ARM_SSH_USER')
+        SSH_HOST = credentials('ARM_SSH_HOST')
     }
     
     stages {
-        stage('server ssh') {
+        stage('SSH and execute ls') {
             steps {
-                publishSSH(
-                    server: 'arm-kr',
-                    command: """
-                        ls
-                    """
-                )
+                sshagent(['arm-ssh-credential']) {
+                    sh 'ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "ls"'
+                }
             }
         }
         // stage('Login to GHCR') {
