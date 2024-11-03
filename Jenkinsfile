@@ -26,10 +26,19 @@ pipeline {
                 sh './gradlew test'
             }
         }
-        stage('Login to GHCR') {
+        // stage('Login to GHCR') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry("https://${env.GHCR_URL}", 'ghcr_credentials') { }
+        //         }
+        //     }
+        // }
+        stage('Push Image') {
             steps {
                 script {
-                    docker.withRegistry("https://${env.GHCR_URL}", 'ghcr_credentials') { }
+                    docker.withRegistry("https://${env.GHCR_URL}", 'ghcr_credentials') {
+                        docker.image("${env.IMAGE_NAME}:latest").push()
+                    }
                 }
             }
         }
