@@ -5,7 +5,7 @@ pipeline {
         GHCR_URL = 'ghcr.io'
         IMAGE_NAME = 'ghcr.io/marinesnow34/jenkins-test'
         SSH_USER = credentials('ARM_SSH_USER')
-        SSH_HOST = credentials('ARM_SSH_HOST')
+        ARM_SSH_HOST = credentials('ARM_SSH_HOST')
     }
     
     stages {
