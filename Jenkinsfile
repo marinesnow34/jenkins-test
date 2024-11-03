@@ -29,7 +29,7 @@ pipeline {
         stage('Login to GHCR') {
             steps {
                 script {
-                    docker.withRegistry("https://${env.GHCR_URL}", 'ghcr-token') { }
+                    docker.withRegistry("https://${env.GHCR_URL}", 'ghcr_credentials') { }
                 }
             }
         }
