@@ -5,14 +5,14 @@ pipeline {
         GHCR_URL = 'ghcr.io'
         IMAGE_NAME = 'ghcr.io/marinesnow34/jenkins-test'
         SSH_USER = credentials('ARM_SSH_USER')
-        ARM_SSH_HOST = credentials('ARM_SSH_HOST')
+        SSH_HOST = credentials('ARM_SSH_HOST')
     }
     
     stages {
         stage('SSH and execute ls') {
             steps {
                 sshagent(['arm-ssh-credential']) {
-                    sh 'ssh -o StrictHostKeyChecking=no ${SSH_USER}@${ARM_SSH_HOST} "ls"'
+                    sh 'ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "ls"'
                 }
             }
         }
