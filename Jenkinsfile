@@ -7,6 +7,13 @@ pipeline {
     }
     
     stages {
+        stage('Login to GHCR') {
+            steps {
+                script {
+                    docker.withRegistry("https://${env.GHCR_URL}", 'ghcr_credentials') { }
+                }
+            }
+        }
         stage('Checkout') {
             steps {
                 echo 'Checking out the repository...'
@@ -26,13 +33,11 @@ pipeline {
                 sh './gradlew test'
             }
         }
-        // stage('Login to GHCR') {
-        //     steps {
-        //         script {
-        //             docker.withRegistry("https://${env.GHCR_URL}", 'ghcr_credentials') { }
-        //         }
-        //     }
-        // }
+        stage('Build Image') {
+            steps {
+                sh "docker build -t ${env.IMAGE_NAME}:latest ."
+            }
+        }
         stage('Push Image') {
             steps {
                 script {
