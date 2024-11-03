@@ -12,7 +12,7 @@ pipeline {
         stage('SSH and execute ls') {
             steps {
                 withCredentials([
-                    string(credentialsId: 'SSH_HOST', variable: 'HOST')
+                    string(credentialsId: 'ARM_SSH_HOST', variable: 'HOST')
                 ]) {
                     sshagent(['arm-ssh-credential']) {
                         sh 'ssh -o StrictHostKeyChecking=no ${SSH_USER}@${HOST} "ls"'
