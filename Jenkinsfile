@@ -12,7 +12,7 @@ pipeline {
         stage('SSH and execute ls') {
             steps {
                 sshagent(['arm-ssh-credential']) {
-                    sh 'ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "ls"'
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@arm.marinesnow34.com "ls"'
                 }
             }
         }
