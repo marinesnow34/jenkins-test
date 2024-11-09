@@ -21,7 +21,7 @@ pipeline {
         stage('Login to GHCR') {
             steps {
                 script {
-                    docker.withRegistry("https://${env.GHCR_URL}", GHCR_PASSWORD) { }
+                    docker.withRegistry("https://${env.GHCR_URL}", 'ghcr_credentials') { }
                 }
             }
         }
@@ -52,7 +52,7 @@ pipeline {
         stage('Push Image') {
             steps {
                 script {
-                    docker.withRegistry("https://${env.GHCR_URL}", ) {
+                    docker.withRegistry("https://${env.GHCR_URL}", 'ghcr_credentials') {
                         docker.image("${env.IMAGE_NAME}:latest").push()
                     }
                 }
